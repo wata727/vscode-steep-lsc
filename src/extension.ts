@@ -6,13 +6,16 @@ import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-lan
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	const conf = vscode.workspace.getConfiguration("steep-lsc");
+	const [command, ...args] = (<[string]>conf.get("commands"));
+
 	const serverOptions: ServerOptions = {
-		command: "bundle",
-		args: ["exec", "steep", "langserver"],
+		command: command,
+		args: args,
 	}
 
 	const clientOptions: LanguageClientOptions = {
-		documentSelector: ['ruby'],
+		documentSelector: ['ruby', 'steep'],
 	};
 
 	const disposable = new LanguageClient("Steep", serverOptions, clientOptions).start()

@@ -10,17 +10,27 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:ruby"
+		"onLanguage:ruby",
+		"onLanguage:steep"
 	],
 	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
+    "contributes": {
+		"languages": [{
+			"id": "steep",
+			"extensions": [ ".rbi" ]
+		}],
+        "configuration": {
+            "type": "object",
+            "title": "Language Server Client for Steep",
+            "properties": {
+                "steep-lsc.commands": {
+                    "type": "array",
+                    "default": ["bundle", "exec", "steep", "langserver"],
+                    "description": "Commands for launching a language server"
+                }
+            }
+        }
+    },
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
